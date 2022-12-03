@@ -21,6 +21,10 @@ using (var scope = app.Services.CreateScope())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
+
+app.UseMiddleware<AttachUserMiddleware>();
+
 app.UseAuthorization();
 
 app.MapControllers();

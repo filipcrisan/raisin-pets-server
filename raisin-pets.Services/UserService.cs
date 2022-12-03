@@ -1,27 +1,42 @@
-using raisin_pets.Common.Dtos.User;
-using raisin_pets.Common.Models;
-
 namespace raisin_pets.Services;
 
 public class UserService : IUserService
 {
-    public Task<Response<UserDto>> GetByGoogleNameIdentifierAsync(string identifier)
+    private readonly IUserRepository _userRepository;
+    private readonly IMapper _mapper;
+
+    public UserService(IUserRepository userRepository, IMapper mapper)
     {
-        throw new NotImplementedException();
+        _userRepository = userRepository;
+        _mapper = mapper;
     }
 
-    public Task<Response<UserDto>> LoginAsync(string token)
+    public async Task<Response<UserDto>> GetByGoogleNameIdentifierAsync(string identifier)
     {
-        throw new NotImplementedException();
+        var response = await _userRepository.GetByGoogleNameIdentifierAsync(identifier);
+
+        return _mapper.Map<Response<UserDto>>(response);
     }
 
-    public Task<Response<UserDto>> SignupAsync(string token)
+    public async Task<Response<UserDto>> LoginAsync(string token)
     {
-        throw new NotImplementedException();
+        var tokenHandler = await GoogleJsonWebSignature.ValidateAsync(token);
+
+        return await GetByGoogleNameIdentifierAsync(tokenHandler.Subject);
     }
 
-    public Task BlacklistJwtAsync(string jwt)
+    public async Task<Response<UserDto>> SignupAsync(string token)
     {
-        throw new NotImplementedException();
+        var tokenHandler = await GoogleJsonWebSignature.ValidateAsync(token);
+
+        var response = await _userRepository.AddAsync(new CreateUserDto
+        {
+            Email = tokenHandler.Email,
+            FirstName = tokenHandler.GivenName,
+            LastName = tokenHandler.FamilyName,
+            GoogleNameIdentifier = tokenHandler.Subject,
+        });
+
+        return _mapper.Map<Response<UserDto>>(response);
     }
 }

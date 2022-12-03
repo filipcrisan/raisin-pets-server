@@ -10,4 +10,9 @@
       <ProjectReference Include="..\raisin-pets.Interfaces\raisin-pets.Interfaces.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
+      <PackageReference Include="Google.Apis.Auth" Version="1.58.0" />
+    </ItemGroup>
+
 </Project>

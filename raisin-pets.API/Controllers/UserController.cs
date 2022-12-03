@@ -35,17 +35,6 @@ public class UserController : ControllerBase
     }
 
     [HttpPut]
-    [Route("{id:guid}")]
-    [Produces("application/json")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<IActionResult> LogoutAsync([FromRoute] Guid id)
-    {
-        await _userService.BlacklistJwtAsync(
-            AuthenticationHeaderValue.Parse(Request.Headers["Authorization"]).Parameter);
-        return Ok();
-    }
-
-    [HttpPut]
     [Route("signup")]
     [AllowAnonymous]
     [ServiceFilter(typeof(ValidTokenFilter))]
