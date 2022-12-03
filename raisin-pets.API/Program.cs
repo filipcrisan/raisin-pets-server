@@ -19,6 +19,10 @@ using (var scope = app.Services.CreateScope())
     dataContext.Database.Migrate();
 }
 
+app.UseCors(option => option.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
+
+app.UseRouting();
+
 app.UseHttpsRedirection();
 
 app.UseAuthentication();
