@@ -1,6 +1,1 @@
-namespace raisin_pets.Services;
-
-public class GlobalUsings
-{
-    
-}
+global using raisin_pets.Interfaces.User;

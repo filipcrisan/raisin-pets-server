@@ -16,6 +16,8 @@
 
     <ItemGroup>
       <ProjectReference Include="..\raisin-pets.Data\raisin-pets.Data.csproj" />
+      <ProjectReference Include="..\raisin-pets.Interfaces\raisin-pets.Interfaces.csproj" />
+      <ProjectReference Include="..\raisin-pets.Services\raisin-pets.Services.csproj" />
     </ItemGroup>
 
 </Project>

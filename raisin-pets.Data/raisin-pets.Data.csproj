@@ -18,6 +18,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\raisin-pets.Common\raisin-pets.Common.csproj" />
+      <ProjectReference Include="..\raisin-pets.Interfaces\raisin-pets.Interfaces.csproj" />
     </ItemGroup>
 
 </Project>
