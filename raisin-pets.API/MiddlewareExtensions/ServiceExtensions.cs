@@ -6,6 +6,8 @@ public static class ServiceExtensions
     {
         services.AddAutoMapper(typeof(User));
 
+        services.AddMemoryCache();
+
         services.DbOptions(configuration);
 
         services.InjectRepositories();

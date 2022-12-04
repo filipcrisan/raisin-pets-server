@@ -52,6 +52,15 @@ public class UserController : ControllerBase
 
         return Ok(_mapper.Map<UserViewModel>(response.Payload));
     }
-    
-    // TODO: add logout endpoint
+
+    [HttpPut]
+    [Route("logout")]
+    [Produces("application/json")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public IActionResult LogoutAsync()
+    {
+        _userService.Logout(
+            AuthenticationHeaderValue.Parse(Request.Headers["Authorization"]).Parameter);
+        return Ok();
+    }
 }
