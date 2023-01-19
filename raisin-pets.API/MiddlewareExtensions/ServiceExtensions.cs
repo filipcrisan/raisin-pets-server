@@ -1,3 +1,5 @@
+using raisin_pets.Interfaces.IPet;
+
 namespace raisin_pets.MiddlewareExtensions;
 
 public static class ServiceExtensions
@@ -30,6 +32,7 @@ public static class ServiceExtensions
     private static void InjectRepositories(this IServiceCollection services)
     {
         services.AddTransient<IUserRepository, UserRepository>();
+        services.AddTransient<IPetRepository, PetRepository>();
     }
 
     private static void InjectServices(this IServiceCollection services)
@@ -38,6 +41,7 @@ public static class ServiceExtensions
         services.AddTransient<UniqueGoogleIdentifierFilter>();
 
         services.AddTransient<IUserService, UserService>();
+        services.AddTransient<IPetService, PetService>();
     }
 
     private static void SwaggerSetup(this IServiceCollection services)

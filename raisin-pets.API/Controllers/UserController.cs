@@ -35,25 +35,6 @@ public class UserController : ControllerBase
     }
 
     [HttpPut]
-    [Route("signup")]
-    [AllowAnonymous]
-    [ServiceFilter(typeof(ValidTokenFilter))]
-    [ServiceFilter(typeof(UniqueGoogleIdentifierFilter))]
-    [Produces("application/json")]
-    [ProducesResponseType(typeof(UserViewModel), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> SignupAsync([FromQuery] string token)
-    {
-        var authHeader = AuthenticationHeaderValue.Parse(token).Parameter;
-        var response = await _userService.SignupAsync(authHeader);
-        if (response.Status == ResponseStatus.Failed)
-            return BadRequest();
-
-        return Ok(_mapper.Map<UserViewModel>(response.Payload));
-    }
-
-    [HttpPut]
     [Route("logout")]
     [Produces("application/json")]
     [ProducesResponseType(StatusCodes.Status200OK)]

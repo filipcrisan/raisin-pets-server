@@ -8,4 +8,5 @@ public class User
     public string LastName { get; set; }
     public string Email { get; set; }
     public Uri Avatar { get; set; }
+    public List<Pet> Pets { get; set; } = new();
 }

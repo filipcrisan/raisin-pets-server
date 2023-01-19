@@ -8,6 +8,7 @@ public class DataContext : DbContext, IDesignTimeDbContextFactory<DataContext>
     #region DbSets
 
     public DbSet<User> Users { get; set; }
+    public DbSet<Pet> Pets { get; set; }
 
     #endregion
     
