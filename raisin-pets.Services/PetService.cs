@@ -20,4 +20,11 @@ public class PetService : IPetService
 
         return _mapper.Map<Response<List<PetDto>>>(response);
     }
+
+    public async Task<Response<PetDto>> AddAsync(CreatePetDto petDto)
+    {
+        var response = await _petRepository.AddAsync(petDto);
+
+        return _mapper.Map<Response<PetDto>>(response);
+    }
 }

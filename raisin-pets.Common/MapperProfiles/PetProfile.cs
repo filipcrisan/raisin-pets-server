@@ -11,5 +11,10 @@ public class PetProfile : Profile
         CreateMap<PetDto, PetViewModel>();
         CreateMap<Response<List<Pet>>, Response<List<PetDto>>>();
         CreateMap<Response<List<PetDto>>, Response<List<PetViewModel>>>();
+        CreateMap<CreatePetViewModel, CreatePetDto>()
+            // this is necessary because DateOnly is not yet fully supported by the binder
+            .ForMember(dest => dest.DateOfBirth, opt => opt.MapFrom(x => DateOnly.FromDateTime(x.DateOfBirth)));
+        CreateMap<CreatePetDto, Pet>();
+        CreateMap<Response<Pet>, Response<PetDto>>();
     }
 }
