@@ -27,8 +27,10 @@ public class PetController : ControllerBase
     {
         var userId = ((UserDto)HttpContext.Items["User"])?.Id;
         if (!userId.HasValue)
+        {
             return Unauthorized();
-
+        }
+        
         var response = await _petService.GetAllAsync(userId.Value);
 
         return Ok(_mapper.Map<List<PetViewModel>>(response.Payload));
@@ -42,13 +44,61 @@ public class PetController : ControllerBase
     {
         var userId = ((UserDto)HttpContext.Items["User"])?.Id;
         if (!userId.HasValue)
+        {
             return Unauthorized();
+        }
 
         var petDto = _mapper.Map<CreatePetDto>(petViewModel);
         petDto.UserId = userId.Value;
         
         var response = await _petService.AddAsync(petDto);
 
+        return Ok(_mapper.Map<PetViewModel>(response.Payload));
+    }
+    
+    [HttpPut]
+    [Produces("application/json")]
+    [ProducesResponseType(typeof(PetViewModel), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> EditAsync([FromBody] EditPetViewModel petViewModel)
+    {
+        var userId = ((UserDto)HttpContext.Items["User"])?.Id;
+        if (!userId.HasValue)
+        {
+            return Unauthorized();
+        }
+
+        var petDto = _mapper.Map<EditPetDto>(petViewModel);
+        petDto.UserId = userId.Value;
+        
+        var response = await _petService.EditAsync(petDto);
+        if (response.Status == ResponseStatus.Failed)
+        {
+            return BadRequest();
+        }
+
+        return Ok(_mapper.Map<PetViewModel>(response.Payload));
+    }
+    
+    [HttpDelete]
+    [Route("{id:int}")]
+    [Produces("application/json")]
+    [ProducesResponseType(typeof(PetViewModel), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> DeleteAsync([FromRoute] int id)
+    {
+        var userId = ((UserDto)HttpContext.Items["User"])?.Id;
+        if (!userId.HasValue)
+        {
+            return Unauthorized();
+        }
+        
+        var response = await _petService.DeleteAsync(id, userId.Value);
+        if (response.Status == ResponseStatus.Failed)
+        {
+            return BadRequest();
+        }
+        
         return Ok(_mapper.Map<PetViewModel>(response.Payload));
     }
 }
