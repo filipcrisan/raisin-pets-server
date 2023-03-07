@@ -9,6 +9,7 @@ public class DataContext : DbContext, IDesignTimeDbContextFactory<DataContext>
 
     public DbSet<User> Users { get; set; }
     public DbSet<Pet> Pets { get; set; }
+    public DbSet<Tutorial> Tutorials { get; set; }
 
     #endregion
     

@@ -1,5 +1,3 @@
-using raisin_pets.Common.Dtos.Pet;
-
 namespace raisin_pets.Interfaces.IPet;
 
 public interface IPetRepository

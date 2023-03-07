@@ -1,6 +1,8 @@
 using raisin_pets.Common.Dtos.Pet;
 using raisin_pets.Common.ViewModels.Pet;
+using raisin_pets.Common.ViewModels.Tutorial;
 using raisin_pets.Interfaces.IPet;
+using raisin_pets.Interfaces.ITutorial;
 
 namespace raisin_pets.Controllers;
 
@@ -10,11 +12,13 @@ namespace raisin_pets.Controllers;
 public class PetController : ControllerBase
 {
     private readonly IPetService _petService;
+    private readonly ITutorialService _tutorialService;
     private readonly IMapper _mapper;
 
-    public PetController(IPetService petService, IMapper mapper)
+    public PetController(IPetService petService, ITutorialService tutorialService, IMapper mapper)
     {
         _petService = petService;
+        _tutorialService = tutorialService;
         _mapper = mapper;
     }
 
@@ -84,7 +88,7 @@ public class PetController : ControllerBase
     [Route("{id:int}")]
     [Produces("application/json")]
     [ProducesResponseType(typeof(PetViewModel), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> DeleteAsync([FromRoute] int id)
     {
         var userId = ((UserDto)HttpContext.Items["User"])?.Id;
@@ -100,5 +104,27 @@ public class PetController : ControllerBase
         }
         
         return Ok(_mapper.Map<PetViewModel>(response.Payload));
+    }
+    
+    [HttpGet]
+    [Route("{petId:int}/tutorials")]
+    [Produces("application/json")]
+    [ProducesResponseType(typeof(List<TutorialViewModel>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> GetTutorialsByCategoryAsync([FromRoute] int petId, [FromQuery] TutorialCategory tutorialCategory)
+    {
+        var userId = ((UserDto)HttpContext.Items["User"])?.Id;
+        if (!userId.HasValue)
+        {
+            return Unauthorized();
+        }
+        
+        var response = await _tutorialService.GetTutorialsByCategoryAsync(userId.Value, petId, tutorialCategory);
+        if (response.Status == ResponseStatus.Failed)
+        {
+            return BadRequest();
+        }
+
+        return Ok(_mapper.Map<List<TutorialViewModel>>(response.Payload));
     }
 }

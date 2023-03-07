@@ -19,5 +19,6 @@ public class PetProfile : Profile
         CreateMap<EditPetViewModel, EditPetDto>()
             // this is necessary because DateOnly is not yet fully supported by the binder
             .ForMember(dest => dest.DateOfBirth, opt => opt.MapFrom(x => DateOnly.FromDateTime(x.DateOfBirth)));
+        CreateMap<Pet, TutorialListPetDto>();
     }
 }
