@@ -8,3 +8,4 @@ global using AutoMapper;
 global using raisin_pets.Utils;
 global using raisin_pets.Common.Dtos.User;
 global using raisin_pets.Common.Utils;
+global using raisin_pets.Interfaces.IExercise;

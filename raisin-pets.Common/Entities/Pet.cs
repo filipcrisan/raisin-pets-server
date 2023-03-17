@@ -10,4 +10,5 @@ public class Pet
     public DateOnly DateOfBirth { get; set; }
     public int UserId { get; set; }
     public User User { get; set; }
+    public List<Exercise> Exercises { get; set; }
 }

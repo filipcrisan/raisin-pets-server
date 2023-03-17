@@ -10,3 +10,4 @@ global using raisin_pets.Common.Enums;
 global using raisin_pets.Interfaces.IPet;
 global using raisin_pets.Common.Dtos.Tutorial;
 global using raisin_pets.Interfaces.ITutorial;
+global using raisin_pets.Interfaces.IExercise;

@@ -1,3 +1,4 @@
+using raisin_pets.Interfaces.IExercise;
 using raisin_pets.Interfaces.IPet;
 using raisin_pets.Interfaces.ITutorial;
 
@@ -35,6 +36,7 @@ public static class ServiceExtensions
         services.AddTransient<IUserRepository, UserRepository>();
         services.AddTransient<IPetRepository, PetRepository>();
         services.AddTransient<ITutorialRepository, TutorialRepository>();
+        services.AddTransient<IExerciseRepository, ExerciseRepository>();
     }
 
     private static void InjectServices(this IServiceCollection services)
@@ -46,6 +48,7 @@ public static class ServiceExtensions
         services.AddTransient<IPetService, PetService>();
         services.AddTransient<IPetValidationService, PetValidationService>();
         services.AddTransient<ITutorialService, TutorialService>();
+        services.AddTransient<IExerciseService, ExerciseService>();
     }
 
     private static void SwaggerSetup(this IServiceCollection services)

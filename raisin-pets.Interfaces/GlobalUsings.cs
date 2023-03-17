@@ -4,3 +4,4 @@ global using raisin_pets.Common.Entities;
 global using raisin_pets.Common.Enums;
 global using raisin_pets.Common.Dtos.Pet;
 global using raisin_pets.Common.Dtos.Tutorial;
+global using raisin_pets.Common.Dtos.Exercise;
