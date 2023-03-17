@@ -1,4 +1,3 @@
-using System.Globalization;
 using raisin_pets.Common.Dtos.Exercise;
 
 namespace raisin_pets.Services;
@@ -34,6 +33,11 @@ public class ExerciseService : IExerciseService
     public async Task<Response<ExerciseDto>> AddAsync(int userId, CreateExerciseDto exerciseDto)
     {
         if (!await _petValidationService.IsUserOwnerOfPetAsync(userId, exerciseDto.PetId))
+        {
+            return new Response<ExerciseDto>().Failed;
+        }
+
+        if (exerciseDto.Checkpoints.Count < 2)
         {
             return new Response<ExerciseDto>().Failed;
         }
