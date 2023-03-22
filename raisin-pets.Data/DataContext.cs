@@ -12,6 +12,7 @@ public class DataContext : DbContext, IDesignTimeDbContextFactory<DataContext>
     public DbSet<Tutorial> Tutorials { get; set; }
     public DbSet<Checkpoint> Checkpoints { get; set; }
     public DbSet<Exercise> Exercises { get; set; }
+    public DbSet<Reminder> Reminders { get; set; }
 
     #endregion
     

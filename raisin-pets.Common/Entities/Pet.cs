@@ -11,4 +11,5 @@ public class Pet
     public int UserId { get; set; }
     public User User { get; set; }
     public List<Exercise> Exercises { get; set; }
+    public List<Reminder> Reminders { get; set; }
 }
