@@ -29,4 +29,18 @@ public class ReminderRepository : IReminderRepository
 
         return reminder.ToResponse();
     }
+
+    public async Task<Response<Reminder>> DeleteAsync(int id)
+    {
+        var reminder = await _dataContext.Reminders.FirstOrDefaultAsync(x => x.Id == id);
+        if (reminder is null)
+        {
+            return new Response<Reminder>().Failed;
+        }
+
+        _dataContext.Remove(reminder);
+        await _dataContext.SaveChangesAsync();
+
+        return reminder.ToResponse();
+    }
 }

@@ -69,4 +69,26 @@ public class ReminderController : ControllerBase
 
         return Ok(_mapper.Map<ReminderViewModel>(response.Payload));
     }
+    
+    [HttpDelete]
+    [Route("{reminderId:int}")]
+    [Produces("application/json")]
+    [ProducesResponseType(typeof(ReminderViewModel), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> DeleteAsync([FromRoute] int petId, [FromRoute] int reminderId)
+    {
+        var userId = ((UserDto)HttpContext.Items["User"])?.Id;
+        if (!userId.HasValue)
+        {
+            return Unauthorized();
+        }
+        
+        var response = await _reminderService.DeleteAsync(userId.Value, petId, reminderId);
+        if (response.Status == ResponseStatus.Failed)
+        {
+            return BadRequest();
+        }
+        
+        return Ok(_mapper.Map<ReminderViewModel>(response.Payload));
+    }
 }

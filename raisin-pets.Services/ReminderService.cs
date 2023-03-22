@@ -42,4 +42,16 @@ public class ReminderService : IReminderService
 
         return _mapper.Map<Response<ReminderDto>>(response);
     }
+
+    public async Task<Response<ReminderDto>> DeleteAsync(int userId, int petId, int reminderId)
+    {
+        if (!await _petValidationService.IsUserOwnerOfPetAsync(userId, petId))
+        {
+            return new Response<ReminderDto>().Failed;
+        }
+        
+        var response = await _reminderRepository.DeleteAsync(reminderId);
+        
+        return _mapper.Map<Response<ReminderDto>>(response);
+    }
 }
