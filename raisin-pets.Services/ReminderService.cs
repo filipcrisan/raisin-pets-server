@@ -30,4 +30,16 @@ public class ReminderService : IReminderService
 
         return _mapper.Map<Response<List<ReminderDto>>>(response);
     }
+
+    public async Task<Response<ReminderDto>> AddAsync(int userId, CreateReminderDto reminderDto)
+    {
+        if (!await _petValidationService.IsUserOwnerOfPetAsync(userId, reminderDto.PetId))
+        {
+            return new Response<ReminderDto>().Failed;
+        }
+        
+        var response = await _reminderRepository.AddAsync(reminderDto);
+
+        return _mapper.Map<Response<ReminderDto>>(response);
+    }
 }

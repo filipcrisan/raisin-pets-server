@@ -1,3 +1,4 @@
+using raisin_pets.Common.Dtos.Reminder;
 using raisin_pets.Interfaces.IReminder;
 
 namespace raisin_pets.Data.Repositories;
@@ -18,4 +19,14 @@ public class ReminderRepository : IReminderRepository
             .Where(x => x.PetId == petId)
             .ToListAsync()
         ).ToResponse();
+
+    public async Task<Response<Reminder>> AddAsync(CreateReminderDto reminderDto)
+    {
+        var reminder = _mapper.Map<Reminder>(reminderDto);
+
+        await _dataContext.AddAsync(reminder);
+        await _dataContext.SaveChangesAsync();
+
+        return reminder.ToResponse();
+    }
 }

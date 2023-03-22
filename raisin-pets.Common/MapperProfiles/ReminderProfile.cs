@@ -11,8 +11,8 @@ public class ReminderProfile : Profile
         CreateMap<ReminderDto, ReminderViewModel>();
         CreateMap<Response<List<Reminder>>, Response<List<ReminderDto>>>();
         CreateMap<Response<List<ReminderDto>>, Response<List<ReminderViewModel>>>();
-        // CreateMap<CreateExerciseViewModel, CreateExerciseDto>();
-        // CreateMap<CreateExerciseDto, Exercise>();
+        CreateMap<CreateReminderViewModel, CreateReminderDto>();
+        CreateMap<CreateReminderDto, Reminder>();
         CreateMap<Response<Reminder>, Response<ReminderDto>>();
     }
 }
