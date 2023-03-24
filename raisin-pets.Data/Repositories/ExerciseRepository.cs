@@ -29,4 +29,18 @@ public class ExerciseRepository : IExerciseRepository
 
         return exercise.ToResponse();
     }
+
+    public async Task<Response<Exercise>> DeleteAsync(int id)
+    {
+        var exercise = await _dataContext.Exercises.FirstOrDefaultAsync(x => x.Id == id);
+        if (exercise is null)
+        {
+            return new Response<Exercise>().Failed;
+        }
+
+        _dataContext.Remove(exercise);
+        await _dataContext.SaveChangesAsync();
+
+        return exercise.ToResponse();
+    }
 }

@@ -48,4 +48,16 @@ public class ExerciseService : IExerciseService
 
         return _mapper.Map<Response<ExerciseDto>>(response);
     }
+
+    public async Task<Response<ExerciseDto>> DeleteAsync(int userId, int petId, int exerciseId)
+    {
+        if (!await _petValidationService.IsUserOwnerOfPetAsync(userId, petId))
+        {
+            return new Response<ExerciseDto>().Failed;
+        }
+        
+        var response = await _exerciseRepository.DeleteAsync(exerciseId);
+        
+        return _mapper.Map<Response<ExerciseDto>>(response);
+    }
 }

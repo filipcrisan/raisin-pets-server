@@ -69,4 +69,26 @@ public class ExerciseController : ControllerBase
 
         return Ok(_mapper.Map<ExerciseViewModel>(response.Payload));
     }
+    
+    [HttpDelete]
+    [Route("{exerciseId:int}")]
+    [Produces("application/json")]
+    [ProducesResponseType(typeof(ExerciseViewModel), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> DeleteAsync([FromRoute] int petId, [FromRoute] int exerciseId)
+    {
+        var userId = ((UserDto)HttpContext.Items["User"])?.Id;
+        if (!userId.HasValue)
+        {
+            return Unauthorized();
+        }
+        
+        var response = await _exerciseService.DeleteAsync(userId.Value, petId, exerciseId);
+        if (response.Status == ResponseStatus.Failed)
+        {
+            return BadRequest();
+        }
+        
+        return Ok(_mapper.Map<ExerciseViewModel>(response.Payload));
+    }
 }
