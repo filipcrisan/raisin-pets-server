@@ -7,11 +7,11 @@ builder.Services.ConfigureServices(builder.Configuration);
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
+app.UseSwagger();
+app.UseSwaggerUI(c =>
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "raisin-pets.API v1");
+});
 
 using (var scope = app.Services.CreateScope())
 {
