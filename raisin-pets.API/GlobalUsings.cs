@@ -26,3 +26,4 @@ global using Microsoft.Extensions.Options;
 global using raisin_pets.Handlers;
 global using Microsoft.OpenApi.Models;
 global using Microsoft.Extensions.Caching.Memory;
+global using raisin_pets.Utils;
